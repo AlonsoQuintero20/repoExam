@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"strconv"
 )
 
 type Student struct {
@@ -41,21 +40,25 @@ func main() {
 
 func newFile() {
 
-	var students Student
+	students := []Student{}
 
-	fmt.Print("Write the first name: ")
-	fmt.Scanln(&students.Name)
-	fmt.Print("Write the First grade: ")
-	fmt.Scanln(&students.Score1)
-	fmt.Print("Write the Second grade: ")
-	fmt.Scanln(&students.Score2)
-	fmt.Print("Write the Third grade: ")
-	fmt.Scanln(&students.Score3)
+	for x := 0; x < 5; x++ {
+		s := Student{}
+		fmt.Print("Write the first name: ")
+		fmt.Scanln(&s.Name)
+		fmt.Print("Write the First grade: ")
+		fmt.Scanln(&s.Score1)
+		fmt.Print("Write the Second grade: ")
+		fmt.Scanln(&s.Score2)
+		fmt.Print("Write the Third grade: ")
+		fmt.Scanln(&s.Score3)
 
-	mydata := []byte("Student: " + students.Name + " has ratings: " + strconv.Itoa(students.Score1) + ", " + strconv.Itoa(students.Score2) + ", " + strconv.Itoa(students.Score3))
+		students = append(students, s)
 
+		//mydata := []byte("Student: " + students.Name + " has ratings: " + strconv.Itoa(students.Score1) + ", " + strconv.Itoa(students.Score2) + ", " + strconv.Itoa(students.Score3))
+	}
 	// the WriteFile method returns an error if unsuccessful
-	err := ioutil.WriteFile("myfile.txt", mydata, 0777)
+	err := ioutil.WriteFile("myfile.txt", []byte(fmt.Sprintf("%v", students)), 0777)
 	// handle this error
 	if err != nil {
 		// print it out
